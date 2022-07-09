@@ -1,0 +1,35 @@
+<div class="main-content" *ngIf="data">
+  <form [formGroup]="drugForm">
+    <div class="form-group" *ngFor="let field of data | orderBy : 'order'">
+      <mat-form-field *ngIf="field.type === 'text' || field.type === 'number'">
+        <mat-label>
+          {{field.label}}
+        </mat-label>
+        <input matInput type="text" [required]="field.isRequired" formControlName="{{field.key}}" [readonly]="field.isReadonly" (keydown)="validateNumberInput($event, field)">
+        <span *ngIf="field.unit" matSuffix>{{field.unit}}</span>
+      </mat-form-field>
+      <mat-form-field *ngIf="field.type === 'dropdown'">
+        <mat-label>
+          {{field.label}}
+        </mat-label>
+        <mat-select formControlName="{{field.key}}" [required]="field.isRequired">
+          <mat-option *ngFor="let item of field.items" [value]="item.value">
+            {{item.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="field.type === 'date'">
+        <mat-label>
+          {{field.label}}
+        </mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="{{field.key}}" [required]="field.isRequired" [readonly]="field.isReadonly">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </form>
+  <div class="btn-group">
+    <button mat-raised-button [color]="'primary'" [disabled]="drugForm.invalid" (click)="submit()">Submit</button>
+    <button mat-raised-button [color]="'danger'" (click)="cancel()">Cancel</button>
+  </div>
+</div>

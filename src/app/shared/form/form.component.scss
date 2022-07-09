@@ -1,0 +1,13 @@
+.main-content{
+  .form-group{
+    width: 100%;
+    mat-form-field{
+      width: 100%;
+    }
+  }
+  .btn-group{
+    width: 300px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
